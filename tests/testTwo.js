@@ -1,9 +1,22 @@
 const { By, Key, Builder } = require("selenium-webdriver");
 require("chromedriver");
 
+const chromeDriver = require("selenium-webdriver/chrome");
+const webdriver = require("selenium-webdriver");
+
 async function example() {
+  //To set chromeOptions
+  var options = new chromeDriver.Options();
+  options.setUserPreferences({
+    "download.default_directory": "D:\\Test",
+  });
+
   //To wait for browser to build and launch properly
-  let driver = await new Builder().forBrowser("chrome").build();
+  var driver = new webdriver.Builder()
+    .withCapabilities(webdriver.Capabilities.chrome())
+    .forBrowser("chrome")
+    .setChromeOptions(options)
+    .build();
 
   try {
     //To go to the test website from the browser with our code.

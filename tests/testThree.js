@@ -1,9 +1,33 @@
+const USERNAME = "YOUR_USERNAME"; //replace with your username
+const KEY = "YOUR_ACCESSKEY"; //replace with your accesskey
+
+const GRID_HOST = "hub.lambdatest.com/wd/hub";
+
 const { By, Key, Builder } = require("selenium-webdriver");
-require("chromedriver");
 
 async function example() {
+
+  var capabilities = {
+    "LT:Options": {
+      user: USERNAME,
+      accessKey: KEY,
+      build: "JavaScript and Selenium Testing",
+      name: "Download File",
+      platformName: "Windows 11",
+      selenium_version: "4.1.0",
+      driver_version: "99.0",
+    },
+    browserName: "Chrome",
+    browserVersion: "99.0",
+  };
+
+  const gridUrl = "https://" + USERNAME + ":" + KEY + "@" + GRID_HOST;
+
   //To wait for browser to build and launch properly
-  let driver = await new Builder().forBrowser("chrome").build();
+  let driver = await new Builder()
+    .usingServer(gridUrl)
+    .withCapabilities(capabilities)
+    .build();
 
   try {
     //To go to the test website from the browser with our code.
